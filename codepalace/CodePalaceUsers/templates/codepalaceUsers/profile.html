@@ -171,7 +171,7 @@
                   <div class="card-block text-center text-white">
                     <div class="m-b-25">
                       <img
-                        style="height: auto; width: 12rem"
+                        style="height: 12rem; width: 12rem"
                         src="{{user.profile.image.url}}"
                         class="img-radius"
                         alt="User-Profile-Image"
@@ -191,7 +191,7 @@
                       <button class="btn btn-primary" id="logout-btn">
                         <a
                           id="fa"
-                          href=""
+                          href="{% url 'profile_update' %}"
                           style="color: white; text-decoration: none"
                           >Update Profile</a
                         >
