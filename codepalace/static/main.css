@@ -317,7 +317,7 @@ nav {
   background-repeat: no-repeat;
   /* background-position: top center; */
   background-color: #ffcf10;
-  height: 80vh;
+  height: 93vh;
   display: flex;
   background-size: cover;
   justify-content: center;
@@ -362,9 +362,12 @@ nav {
 }
 
 .btn-developers {
-  background-color: var(--white);
-  color: var(--orange-400);
-  border: 1px solid var(--orange-400);
+  background-color: #fbd439;
+  color: #3ab9c8;
+  border: 1px solid #ffffff;
+  font-weight: 600;
+  border-radius: 1rem;
+  font-size: 1.2rem;
 }
 
 .btn-businesses {

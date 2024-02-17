@@ -35,7 +35,9 @@ urlpatterns = [
 
     # profile
 
-    path("profile/", user_views.profile, name="profile")
+    path("profile/", user_views.profile, name="profile"),
+    path("profile/update/", user_views.profile_update, name="profile_update"),
+
 ]
 
 
