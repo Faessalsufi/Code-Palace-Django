@@ -11,6 +11,8 @@ urlpatterns = [
     path('questions/<int:pk>/', views.QuestionDetailView.as_view(),
          name="questions_detail"),
 
+    path('questions/create', views.QuestionCreateView.as_view(),
+         name="question_create"),
     # added
     path('profile/<int:pk>/', views.ProfileDetailView.as_view(),
          name="profiles"),
