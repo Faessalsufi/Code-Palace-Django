@@ -1,3 +1,4 @@
+from django.views.generic import DetailView
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from .models import Question
@@ -25,4 +26,9 @@ class QuestionDetailView(DetailView):
 
 class ProfileDetailView(DetailView):
     model = Profile
-    context_object_name = 'profile'
+    template_name = 'codepalaceUsers/profile.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user'] = self.object.user
+        return context

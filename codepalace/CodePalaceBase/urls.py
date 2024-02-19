@@ -13,6 +13,6 @@ urlpatterns = [
 
     # added
     path('profile/<int:pk>/', views.ProfileDetailView.as_view(),
-         name="profile_detail"),
+         name="profiles"),
 
 ]

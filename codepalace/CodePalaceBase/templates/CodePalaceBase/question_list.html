@@ -87,15 +87,17 @@
       <div id="sub-nav">
         <h1 id="fh1">Top Questions</h1>
 
-        <button class="btn" id="logout-btn">
-          <a id="fa" href="" style="color: white; text-decoration: none"
-            >Ask Question</a
-          >
-        </button>
+      
         <button class="btn" id="logout-btn">
           <a
             id="fa"
+            {% if user.is_authenticated %}
+            href="{% url 'register' %}"
+            {% else %}
             href="{% url 'login' %}"
+
+            {% endif %}
+
             style="color: white; text-decoration: none"
             >Ask Question</a
           >
@@ -150,10 +152,12 @@
               "
             >
               Asked By:
-              <a href="{% url 'CodePalaceBase:profile_detail' question.id%}"
-                >{{ question.user }}</a
-              >
-              >&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; On:
+             
+
+              <a href="{% url 'CodePalaceBase:profiles' question.user.profile.id %}"
+                >{{ question.user }} {{question.user.profile.id}}</a>
+              
+              &nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; On:
               {{question.date_created | date:"j F, Y"}}
             </h6>
             <h5 style="text-align: right; font-size: 12px; font-style: italic">

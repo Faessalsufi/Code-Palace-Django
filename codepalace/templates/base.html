@@ -21,7 +21,20 @@
 
     <link rel="stylesheet" href="{% static 'main.css' %}">
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous"> -->
+<style>
+    .message-animate {
+    animation: slideInFromTop 0.5s ease-in-out forwards;
+}
 
+@keyframes slideInFromTop {
+    0% {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+</style>
 </head>
 
 <body>
@@ -115,16 +128,28 @@
         </nav>
         </div>
         <!-- <h1 style="font-size: 20px;">hello</h1> -->
-        <div style="margin-top: 10px;">
+
+
+         {% comment %} <div style="margin-top: 10px;" class=" message-home">
             {% if messages %}
             {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}" role="alert">
+            <div class="alert alert-{{ message.tags }} message-animate" role="alert">
+                <h4 style="text-align: center;">{{ message }}</h4>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>  {% endcomment %}
+
+
+        <div style="margin-top: 10px;" class="message-home">
+            {% if messages %}
+            {% for message in messages %}
+            <div id="message-alert" class="alert alert-{{ message.tags }} message-animate" role="alert">
                 <h4 style="text-align: center;">{{ message }}</h4>
             </div>
             {% endfor %}
             {% endif %}
         </div>
-
 
     </header>
 
@@ -146,6 +171,14 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"
         integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/"
         crossorigin="anonymous"></script>
+        <script>
+            // Remove the message after 3 seconds
+            setTimeout(() => {
+                const messageAlert = document.getElementById('message-alert');
+                messageAlert.parentNode.removeChild(messageAlert);
+            }, 3000);
+        </script>
+       
 </body>
 
 </html>

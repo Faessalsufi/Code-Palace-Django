@@ -110,3 +110,9 @@ var [login, register, form] = ["login", "register", "form"].map((id) =>
       : form.classList.remove("active");
   };
 });
+
+// Remove the message after 3 seconds
+setTimeout(() => {
+  const messageAlert = document.getElementById("message-alert");
+  messageAlert.parentNode.removeChild(messageAlert);
+}, 3000);
