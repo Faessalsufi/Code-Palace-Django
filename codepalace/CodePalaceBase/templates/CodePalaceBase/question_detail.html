@@ -92,10 +92,12 @@
             <div class="questions">
                 <div class="container" style="background-color: rgba(255, 235, 209, 0.808); padding: 5px; box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 5px 0px; border-radius: 20px;" >
                     <h3 id="fh3">{{question.title}}</h3>
+                    <h3 id="fh3">{{question.user.profile.id}}</h3>
+                    <h3 id="fh3">{{user.profile.id}}</h3>
                     <hr>
                     <h6 id="fh6">{{ question.content|safe }}</h6>
                     <hr>
-                    <h6 id="fh6" style="font-size: 10px; font-style: italic; color: rgb(155, 155, 155); text-align: right;">Asked By: <a href="{% url 'profile' %}">{{ object.user|title }}</a>&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; On: {{ object.date_created|date:"j F, Y" }}</h6>
+                    <h6 id="fh6" style="font-size: 10px; font-style: italic; color: rgb(155, 155, 155); text-align: right;">Asked By: <a href="{% url 'CodePalaceBase:profiles' question.user.profile.id %}">{{ object.user|title }}</a>&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; On: {{ object.date_created|date:"j F, Y" }}</h6>
                     <br>
                         {% comment %} <form action="" method="POST">
                             {% csrf_token %}
@@ -160,8 +162,13 @@
                     </form> -->
                     
                     <a class="btn btn-outline-primary" id="fa" href="" style="text-decoration: none;">Answer Question</a>
-                    <a style="text-decoration: none; " class="btn btn-outline-success" href="">&#x270E;</a>
-                    <a style="text-decoration: none; " class="btn btn-outline-danger" href="">&#x2716;</a>
+
+                    {% if question.user.profile.id == user.profile.id %}
+
+                        <a style="text-decoration: none; " class="btn btn-outline-success" href=" {% url 'CodePalaceBase:question_update' question.id %} ">&#x270E;</a>
+                        <a style="text-decoration: none; " class="btn btn-outline-danger" href="">&#x2716;</a>
+
+                    {% endif %}
                     <a style="text-decoration: none; " class="btn btn-outline-secondary" href=" {% url 'CodePalaceBase:questions_list' %} ">&#x21a9;</a>
                 </div> <br><br>
                     <!-- Answer Section -->

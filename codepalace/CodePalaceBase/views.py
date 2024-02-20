@@ -1,10 +1,9 @@
 from django.views.generic import DetailView
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from .models import Question
 from CodePalaceUsers.models import Profile
-from django.urls import reverse
-
+from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 # Create your views here.
 
 
@@ -33,9 +32,18 @@ class QuestionCreateView(CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-    def get_success_url(self):
-        # Assuming the profile page URL is named 'profile'
-        return reverse('CodePalaceBase:questions_detail', kwargs={'pk': self.object.pk})
+
+class QuestionUpdateView(UserPassesTestMixin, UpdateView):
+    model = Question
+    fields = ['title', 'content']
+    template_name = 'CodePalaceBase/question_create.html'
+
+    def test_func(self):
+        question = self.get_object()
+        if self.request.user == question.user:
+            return True
+        else:
+            return False
 
     # added
 
