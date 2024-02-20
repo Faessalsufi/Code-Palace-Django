@@ -1,9 +1,12 @@
 from django.views.generic import DetailView
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Question
 from CodePalaceUsers.models import Profile
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
+from django.urls import reverse
+from django.contrib import messages
+from django.urls import reverse_lazy
 # Create your views here.
 
 
@@ -44,6 +47,33 @@ class QuestionUpdateView(UserPassesTestMixin, UpdateView):
             return True
         else:
             return False
+
+
+# class QuestionDeleteView(UserPassesTestMixin, DeleteView):
+#     model = Question
+
+#     def test_func(self):
+#         question = self.get_object()
+#         if self.request.user == question.user:
+#             return True
+#         else:
+#             return False
+
+#     def get_success_url(self):
+#         return reverse('CodePalaceBase:questions_list')
+
+
+class QuestionDeleteView(UserPassesTestMixin, DeleteView):
+    model = Question
+    success_url = reverse_lazy('CodePalaceBase:questions_list')
+
+    def test_func(self):
+        question = self.get_object()
+        return self.request.user == question.user
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(request, 'Post deleted successfully.')
+        return super().delete(request, *args, **kwargs)
 
     # added
 

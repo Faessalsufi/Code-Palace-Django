@@ -17,6 +17,8 @@ urlpatterns = [
     path('questions/<int:pk>/update', views.QuestionUpdateView.as_view(),
          name="question_update"),
 
+    path('questions/<int:pk>/delete', views.QuestionDeleteView.as_view(),
+         name="question_delete"),
 
     # added
     path('profile/<int:pk>/', views.ProfileDetailView.as_view(),
