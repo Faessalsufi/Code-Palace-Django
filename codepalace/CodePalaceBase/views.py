@@ -4,9 +4,11 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from .models import Question
 from CodePalaceUsers.models import Profile
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
-from django.urls import reverse
 from django.contrib import messages
-from django.urls import reverse_lazy
+from django.urls import reverse
+from django.views.generic.edit import DeleteView
+
+
 # Create your views here.
 
 
@@ -26,7 +28,7 @@ class QuestionDetailView(DetailView):
     model = Question
 
 
-class QuestionCreateView(CreateView):
+class QuestionCreateView(LoginRequiredMixin, CreateView):
     model = Question
     fields = ['title', 'content']
     template_name = 'CodePalaceBase/question_create.html'
@@ -36,7 +38,7 @@ class QuestionCreateView(CreateView):
         return super().form_valid(form)
 
 
-class QuestionUpdateView(UserPassesTestMixin, UpdateView):
+class QuestionUpdateView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
     model = Question
     fields = ['title', 'content']
     template_name = 'CodePalaceBase/question_create.html'
@@ -49,31 +51,24 @@ class QuestionUpdateView(UserPassesTestMixin, UpdateView):
             return False
 
 
-# class QuestionDeleteView(UserPassesTestMixin, DeleteView):
-#     model = Question
-
-#     def test_func(self):
-#         question = self.get_object()
-#         if self.request.user == question.user:
-#             return True
-#         else:
-#             return False
-
-#     def get_success_url(self):
-#         return reverse('CodePalaceBase:questions_list')
-
-
-class QuestionDeleteView(UserPassesTestMixin, DeleteView):
+class QuestionDeleteView(UserPassesTestMixin, LoginRequiredMixin, DeleteView):
     model = Question
-    success_url = reverse_lazy('CodePalaceBase:questions_list')
 
     def test_func(self):
         question = self.get_object()
-        return self.request.user == question.user
+        if self.request.user == question.user:
+            return True
+        else:
+            return False
 
-    def delete(self, request, *args, **kwargs):
-        messages.success(request, 'Post deleted successfully.')
-        return super().delete(request, *args, **kwargs)
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(
+            self.request, 'Your post has been deleted successfully.')
+        return response
+
+    def get_success_url(self):
+        return reverse('CodePalaceBase:questions_list')
 
     # added
 

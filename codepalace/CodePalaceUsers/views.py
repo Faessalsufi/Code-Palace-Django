@@ -33,6 +33,7 @@ def profile(request):
     return render(request, 'codepalaceUsers/profile.html')
 
 
+@login_required
 def profile_update(request):
     if request.method == "POST":
         user_update_form = UserUpdateForm(request.POST, instance=request.user)
