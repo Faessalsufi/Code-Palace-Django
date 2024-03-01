@@ -116,6 +116,20 @@
                         style="font-size: 10px; font-style: italic; color: rgb(155, 155, 155); text-align: right;">Asked
                         By: <a href="{% url 'CodePalaceBase:profiles' question.user.profile.id %}">{{ question.user|title}}</a>&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp; On: {{ object.date_created|date:"j F, Y" }}
                     </h6>
+
+<h2>Answers...</h2>
+
+                {% if not question.comment.all %}
+                     <h3>No Answers yet... <a href="">Answer Question</a> </h3>
+                {% else %}
+                         {% for comment in question.comment.all %}
+                         <h3 style="font-weight: normal; font-size: 15px;">{{comment.content|safe}}</h3>
+                         <h3 style="font-size: 10px;">Answered by: <i><a href="{% url 'CodePalaceBase:profiles' comment.user.profile.id %}">{{comment.user}}</a> - On:
+                                 {{comment.date_created|date:"j F, Y"}}</i></h3>
+                         <hr>
+                         {% endfor %}
+                {% endif %}
+
                     <br>
                     {% comment %} <form action="" method="POST">
                         {% csrf_token %}
@@ -189,7 +203,7 @@
                         {% endif %}
                     </form> -->
 
-                    <a class="btn btn-outline-primary" id="fa" href="" style="text-decoration: none;">Answer
+                    <a class="btn btn-outline-primary" id="fa" href=" {% url 'CodePalaceBase:question_comment' question.id %}" style="text-decoration: none;">Answer
                         Question</a>
 
                     {% if question.user.profile.id == user.profile.id %}

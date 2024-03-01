@@ -1,14 +1,14 @@
 from django.views.generic import DetailView
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Question
+from .models import Question, Comment
 from CodePalaceUsers.models import Profile
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.contrib import messages
 from django.urls import reverse
 from django.views.generic.edit import DeleteView
-
-
+from .forms import CommentForm
+from django.urls import reverse_lazy
 # Create your views here.
 
 
@@ -70,9 +70,32 @@ class QuestionDeleteView(UserPassesTestMixin, LoginRequiredMixin, DeleteView):
     def get_success_url(self):
         return reverse('CodePalaceBase:questions_list')
 
-    # added
+
+class commentDetailView(CreateView):
+    model = Comment
+    form_class = CommentForm
+    template_name = 'CodePalaceBase/question_detail.html'
+
+    def form_valid(self, form):
+        form.instance.question_id = self.kwargs['pk']
+        return super().form_valid(form)
+    success_url = reverse_lazy('CodePalaceBase:question_detail')
 
 
+class AddCommentView(CreateView):
+    model = Comment
+    form_class = CommentForm
+    template_name = "CodePalaceBase/question_answer.html"
+
+    def form_valid(self, form):
+        form.instance.question_id = self.kwargs['pk']
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+    success_url = reverse_lazy('CodePalaceBase:questions_list')
+
+
+# added
 class ProfileDetailView(DetailView):
     model = Profile
     template_name = 'codepalaceUsers/profile.html'

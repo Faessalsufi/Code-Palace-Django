@@ -12,6 +12,13 @@ class UserRegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control', 'id': 'login-register'}),
+            'email': forms.TextInput(attrs={'class': 'form-control', 'id': 'login-register'}),
+            'password1': forms.TextInput(attrs={'class': 'form-control', 'id': 'login-register'}),
+            'password2': forms.TextInput(attrs={'class': 'form-control', 'id': 'login-register'}),
+
+        }
 
 
 class UserUpdateForm(forms.ModelForm):

@@ -751,7 +751,7 @@ nav {
   }
 
   .hero {
-    background-image: url("https://cdn.sstatic.net/Img/home/illo-hero-small.svg?v=884735d21ea5");
+    background-image: url("/static/bgc.png");
   }
 
   .hero-title {
@@ -838,3 +838,10 @@ nav {
 /* End Media Queries */
 
 /*# sourceMappingURL=main.css.map */
+
+
+
+
+.option{
+  background-color: #3ab9c8 !important;
+}
