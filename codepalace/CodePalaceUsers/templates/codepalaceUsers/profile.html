@@ -182,11 +182,14 @@
                     </h6>
                     <p style="font-size: 14px; color: black">
                       <!-- Add bio here -->
-                      {{user.profile.bio}}
+                      {{user.profile.bio}} {{request.user}} {{user.username}}
                     </p>
                     <i
                       class="mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"
                     ></i>
+
+                    {% if user.username|slugify == request.user|slugify %}
+
                     <div style="margin-top: 10px">
                       <button class="btn btn-primary" id="logout-btn">
                         <a
@@ -197,6 +200,7 @@
                         >
                       </button>
                     </div>
+                    {% endif %}
                   </div>
                 </div>
                 <div class="col-sm-8">

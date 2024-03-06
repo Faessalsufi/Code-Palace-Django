@@ -9,6 +9,7 @@ from django.urls import reverse
 from django.views.generic.edit import DeleteView
 from .forms import CommentForm
 from django.urls import reverse_lazy
+from django.contrib.auth import get_user
 # Create your views here.
 
 
